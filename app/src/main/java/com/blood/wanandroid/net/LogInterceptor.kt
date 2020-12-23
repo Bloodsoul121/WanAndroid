@@ -1,7 +1,6 @@
 package com.blood.wanandroid.net
 
 import okhttp3.*
-import okhttp3.Response
 import okio.Buffer
 import timber.log.Timber
 import java.io.IOException
@@ -19,10 +18,8 @@ class LogInterceptor : Interceptor {
         val response: okhttp3.Response = chain.proceed(chain.request())
         val mediaType = response.body!!.contentType()
         val responseBody = response.body!!.string()
-        Timber.d("ResponseBody:$responseBody")
-        return response.newBuilder()
-            .body(ResponseBody.create(mediaType, responseBody))
-            .build()
+        Timber.i("ResponseBody:$responseBody")
+        return response.newBuilder().body(ResponseBody.create(mediaType, responseBody)).build()
     }
 
     private fun bodyToString(request: RequestBody?): String? {
