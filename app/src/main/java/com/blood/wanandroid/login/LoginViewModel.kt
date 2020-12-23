@@ -3,13 +3,14 @@ package com.blood.wanandroid.login
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.blood.wanandroid.R
+import com.blood.wanandroid.base.BaseViewModel
 import com.blood.wanandroid.base.DataRepository
 import com.blood.wanandroid.net.HttpResult
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(private val dataRepository: DataRepository) : ViewModel() {
+class LoginViewModel @Inject constructor(private val dataRepository: DataRepository) :
+    BaseViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm

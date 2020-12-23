@@ -1,4 +1,4 @@
-package com.blood.wanandroid.app
+package com.blood.wanandroid.dagger
 
 import com.blood.wanandroid.home.HomeActivity
 import com.blood.wanandroid.login.LoginActivity

@@ -1,5 +1,6 @@
 package com.blood.wanandroid.app
 
+import com.blood.wanandroid.dagger.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 

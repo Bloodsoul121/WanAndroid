@@ -1,6 +1,7 @@
-package com.blood.wanandroid.app
+package com.blood.wanandroid.dagger
 
 import android.util.ArrayMap
+import com.blood.wanandroid.dagger.ViewModelModule
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

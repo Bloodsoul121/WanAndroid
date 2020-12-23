@@ -1,5 +1,7 @@
-package com.blood.wanandroid.app
+package com.blood.wanandroid.dagger
 
+import com.blood.wanandroid.app.App
+import com.blood.wanandroid.dagger.support_viewmodel.ViewModelFactoryModule
 import com.blood.wanandroid.login.LoginModule
 import com.blood.wanandroid.net.HttpModule
 import dagger.Component
@@ -14,11 +16,11 @@ import javax.inject.Singleton
         ViewModelFactoryModule::class,
         AppModule::class,
         ActivityModule::class,
-        LoginModule::class,
-        HttpModule::class
+        HttpModule::class,
+        LoginModule::class
     ]
 )
-interface AppComponent : AndroidInjector<App> {
+public interface AppComponent : AndroidInjector<App> {
 
     @Component.Builder
     abstract class Builder : AndroidInjector.Builder<App>()
