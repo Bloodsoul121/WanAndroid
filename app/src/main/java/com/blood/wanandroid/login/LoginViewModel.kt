@@ -7,6 +7,7 @@ import com.blood.wanandroid.R
 import com.blood.wanandroid.base.BaseObserver
 import com.blood.wanandroid.base.BaseViewModel
 import com.blood.wanandroid.base.DataRepository
+import com.blood.wanandroid.bean.LoginBean
 import com.blood.wanandroid.net.HttpResponse
 import com.blood.wanandroid.net.HttpResult
 import com.blood.wanandroid.net.Status
@@ -23,8 +24,7 @@ class LoginViewModel @Inject constructor(private val dataRepository: DataReposit
         val liveData = MutableLiveData<HttpResult<LoginBean>>()
         liveData.value = HttpResult(status = Status.LOADING)
         val disposable =
-            dataRepository.login(username, password)
-                .compose(RxHelper.rxSchedulerHelper())
+            dataRepository.login(username, password).compose(RxHelper.rxSchedulerHelper())
                 .subscribeWith(object : BaseObserver<HttpResponse<LoginBean>>() {
                     override fun onNext(httpResponse: HttpResponse<LoginBean>) {
                         if (httpResponse.isSuccess()) {

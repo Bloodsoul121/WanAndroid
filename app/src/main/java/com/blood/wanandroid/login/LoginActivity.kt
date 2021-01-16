@@ -7,30 +7,29 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.blood.wanandroid.R
 import com.blood.wanandroid.base.BaseActivity
+import com.blood.wanandroid.bean.LoginBean
 import com.blood.wanandroid.home.HomeActivity
 import com.blood.wanandroid.net.Status
+import com.blood.wanandroid.util.ToastUtil
 import kotlinx.android.synthetic.main.activity_login.*
+import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {
 
-    private lateinit var loginViewModel: LoginViewModel
+    @Inject
+    lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_login)
 
-        loginViewModel = ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
-
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
 
-            // disable login button unless both username / password is valid
             login.isEnabled = loginState.isDataValid
 
             if (loginState.usernameError != null) {
@@ -71,7 +70,6 @@ class LoginActivity : BaseActivity() {
         loginViewModel.login(username.text.toString(), password.text.toString())
             .observe(this@LoginActivity, Observer {
                 val loginResult = it ?: return@Observer
-
                 when (loginResult.status) {
                     Status.LOADING -> loading.visibility = View.VISIBLE
                     Status.SUCCESS -> {
@@ -87,7 +85,6 @@ class LoginActivity : BaseActivity() {
 
                 setResult(Activity.RESULT_OK)
 
-                //Complete and destroy login activity once successful
                 finish()
 
                 skipActivity(HomeActivity::class.java)
@@ -97,22 +94,16 @@ class LoginActivity : BaseActivity() {
     private fun updateUiWithUser(model: LoginBean) {
         val welcome = getString(R.string.welcome)
         val displayName = model.username
-
-        Toast.makeText(applicationContext, "$welcome $displayName", Toast.LENGTH_LONG).show()
+        ToastUtil.toast("$welcome $displayName")
     }
 
     private fun showLoginFailed(errorString: String?) {
-        errorString?.let {
-            Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
-        }
+        errorString?.let { ToastUtil.toast(errorString) }
     }
 
-
-    /**
-     * Extension function to simplify setting an afterTextChanged action to EditText components.
-     */
-    fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
+    private fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
         this.addTextChangedListener(object : TextWatcher {
+
             override fun afterTextChanged(editable: Editable?) {
                 afterTextChanged.invoke(editable.toString())
             }

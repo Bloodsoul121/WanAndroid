@@ -7,7 +7,6 @@ import dagger.android.DaggerApplication
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
-
 class App : DaggerApplication() {
 
     companion object {

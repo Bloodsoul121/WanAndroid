@@ -1,6 +1,6 @@
 package com.blood.wanandroid.base
 
-import io.reactivex.observers.ResourceObserver
+import io.reactivex.rxjava3.observers.ResourceObserver
 
 abstract class BaseObserver<T> : ResourceObserver<T>() {
 

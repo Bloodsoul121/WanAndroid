@@ -1,4 +1,4 @@
-package com.blood.wanandroid.login
+package com.blood.wanandroid.bean
 
 data class LoginBean(
     val admin: Boolean,

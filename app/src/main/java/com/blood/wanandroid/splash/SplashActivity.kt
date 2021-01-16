@@ -7,13 +7,13 @@ import android.os.Looper
 import com.blood.wanandroid.R
 import com.blood.wanandroid.base.BaseActivity
 import com.blood.wanandroid.login.LoginActivity
-import com.tbruyelle.rxpermissions2.RxPermissions
-import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
+import com.blood.wanandroid.util.ToastUtil
+import com.tbruyelle.rxpermissions3.RxPermissions
+import io.reactivex.rxjava3.disposables.Disposable
 
 class SplashActivity : BaseActivity() {
 
-    lateinit var rxPermissionsDisposable: Disposable
+    private lateinit var rxPermissionsDisposable: Disposable
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -28,18 +28,18 @@ class SplashActivity : BaseActivity() {
             Manifest.permission.INTERNET,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE
-        ).subscribe(Consumer {
+        ).subscribe {
             if (it) {
-                toast("accept permissions")
+                ToastUtil.toast(this, "accept")
                 handler.postDelayed({
                     skipActivity(LoginActivity::class.java)
                     finish()
-                }, 2000)
+                }, 2500)
             } else {
-                toast("deny permissions")
-                finish();
+                ToastUtil.toast(this, "deny")
+                finish()
             }
-        })
+        }
     }
 
     override fun onDestroy() {
