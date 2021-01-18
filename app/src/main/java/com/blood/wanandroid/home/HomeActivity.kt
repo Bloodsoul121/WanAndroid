@@ -1,8 +1,10 @@
 package com.blood.wanandroid.home
 
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blood.wanandroid.R
 import com.blood.wanandroid.base.BaseActivity
@@ -29,6 +31,16 @@ class HomeActivity : BaseActivity() {
         binding.rv.layoutManager = LinearLayoutManager(this)
         binding.rv.adapter = adapter.withLoadStateFooter(LiveLoadStateAdapter(adapter::retry))
         binding.rv.setHasFixedSize(true)
+
+        binding.noDataView.setOnClickListener { adapter.retry() }
+
+        adapter.addLoadStateListener {
+            when (it.refresh) {
+                is LoadState.Error -> binding.noDataView.visibility = View.VISIBLE
+                is LoadState.Loading, is LoadState.NotLoading -> binding.noDataView.visibility =
+                    if (adapter.itemCount == 0) View.VISIBLE else View.GONE
+            }
+        }
 
         lifecycleScope.launchWhenCreated {
             homeViewModel.getPager().collectLatest {

@@ -34,9 +34,13 @@ class LoginActivity : BaseActivity() {
 
             if (loginState.usernameError != null) {
                 username.error = getString(loginState.usernameError)
+            } else {
+                username.error = null
             }
             if (loginState.passwordError != null) {
                 password.error = getString(loginState.passwordError)
+            } else {
+                password.error = null
             }
         })
 
