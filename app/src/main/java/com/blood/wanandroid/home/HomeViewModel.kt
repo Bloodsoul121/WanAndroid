@@ -6,6 +6,8 @@ import androidx.paging.PagingSource
 import com.blood.wanandroid.base.BaseViewModel
 import com.blood.wanandroid.base.DataRepository
 import com.blood.wanandroid.bean.DataX
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(private val dataRepository: DataRepository) :
@@ -35,5 +37,14 @@ class HomeViewModel @Inject constructor(private val dataRepository: DataReposito
             }
         }
     }).flow
+
+    private val mOnSelect = PublishSubject.create<DataX>()
+
+    val onSelect: Observable<DataX>
+        get() = mOnSelect
+
+    fun select(article: DataX) {
+        mOnSelect.onNext(article)
+    }
 
 }

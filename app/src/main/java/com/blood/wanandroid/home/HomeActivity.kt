@@ -1,5 +1,6 @@
 package com.blood.wanandroid.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blood.wanandroid.R
 import com.blood.wanandroid.base.BaseActivity
 import com.blood.wanandroid.databinding.ActivityMainBinding
+import com.blood.wanandroid.util.ToastUtil
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
@@ -26,6 +28,7 @@ class HomeActivity : BaseActivity() {
         init()
     }
 
+    @SuppressLint("CheckResult")
     private fun init() {
         adapter = PagingAdapter()
         binding.rv.layoutManager = LinearLayoutManager(this)
@@ -47,5 +50,7 @@ class HomeActivity : BaseActivity() {
                 adapter.submitData(it)
             }
         }
+
+        homeViewModel.onSelect.subscribe { ToastUtil.toast(it.title) }
     }
 }
