@@ -10,16 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blood.wanandroid.R
 import com.blood.wanandroid.bean.DataX
 import com.blood.wanandroid.databinding.LayoutItemArticleBinding
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
 class PagingAdapter : PagingDataAdapter<DataX, PagingAdapter.ViewHolder>(ARTICLE_COMPARATOR),
-    View.OnClickListener, HasAndroidInjector {
-
-    @Inject
-    lateinit var androidInjector: DispatchingAndroidInjector<Any>
+    View.OnClickListener {
 
     @Inject
     lateinit var homeViewModel: HomeViewModel
@@ -35,10 +29,6 @@ class PagingAdapter : PagingDataAdapter<DataX, PagingAdapter.ViewHolder>(ARTICLE
     }
 
     class ViewHolder(val binding: LayoutItemArticleBinding) : RecyclerView.ViewHolder(binding.root)
-
-    override fun androidInjector(): AndroidInjector<Any> {
-        return androidInjector
-    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = getItem(position)
